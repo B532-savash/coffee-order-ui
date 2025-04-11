@@ -106,6 +106,27 @@ function CondimentPageEvents() {
     });
 
     document.getElementById('confirm-order-btn').addEventListener('click', () => {
-        loadPage('confirmation');
+        const order = {
+            beverage: state.beverage,
+            condiments: state.condiments
+        };
+
+        fetch('https://coffee-order-s9ac.onrender.com/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        })
+        .then(response => response.json()) // Line ~129, where the error occurs
+        .then(data => {
+            console.log('Backend response:', data);
+            state.receipt = data;
+            loadPage('confirmation');
+        })
+        .catch(error => {
+            console.error('Error submitting order:', error);
+            alert('Failed to place order. Please try again.');
+        });
     });
 }

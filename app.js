@@ -1,7 +1,8 @@
 // Shared state for the application
 const state = {
     beverage: null,
-    condiments: []
+    condiments: [],
+    receipt: null
 };
 
 // Function to load a page dynamically
